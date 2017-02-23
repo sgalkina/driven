@@ -96,6 +96,8 @@ class ModelModificationMixin(object):
 
         """
         exchange_metabolite = Metabolite(metabolite.id[:-2] + '_e', formula=metabolite.formula, compartment='e')
+        if not self.model.metabolites.has_id(exchange_metabolite.id):
+            self.changes['added']['metabolites'].add(exchange_metabolite)
         self.add_adapter_reaction(metabolite, exchange_metabolite)
         self.add_exchange_reaction(exchange_metabolite)
 
